@@ -84,7 +84,7 @@ export const acceptConnectionRequest = async (req, res)=>{
         const senderEmail = request.sender.email;
         const senderName = request.sender.name;
         const recipientName = request.recipient.name;
-        const profileUrl = process.env.CLIENT_UrL + "/profile/" + request.recipient.username
+        const profileUrl = process.env.CLIENT_URL + "/profile/" + request.recipient.username
 
         try{
             await sendConnectionAcceptedEmail(senderEmail, senderName, recipientName, profileUrl)
