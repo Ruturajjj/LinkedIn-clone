@@ -43,6 +43,17 @@ if (process.env.NODE_ENV === "production") {
 		res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 	});
 }
+// if (process.env.NODE_ENV === "production") {
+//   // frontendDistPath points to frontend/dist relative to backend folder
+//   const frontendDistPath = path.resolve(__dirname, "../frontend/dist");
+
+//   app.use(express.static(frontendDistPath));
+
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(frontendDistPath, "index.html"));
+//   });
+// }
+
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
