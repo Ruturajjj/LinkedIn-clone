@@ -21,7 +21,7 @@ const ProfileHeader = ({userData, onSave, isOwnProfile}) => {
         enabled: !isOwnProfile
     })
 
-    const isConnected = userData.connections.some((connection)=> connection._id === authUser._id);
+    const isConnected = userData.connections.some((connection)=> connection === authUser._id);
 
     const {mutate: sendConnectionRequest} = useMutation({
         mutationFn: (userId) => axiosInstance.post(`/connections/request/${userId}`),
@@ -80,7 +80,7 @@ const ProfileHeader = ({userData, onSave, isOwnProfile}) => {
     const renderConnectionButton = ()=>{
         const baseClass = "text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center";
 
-        switch(getConnectionStatus()){
+        switch(getConnectionStatus){
             case "connected" :
                 return(
                     <div className="flex gap-2 justify-center">
