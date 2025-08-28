@@ -1,176 +1,312 @@
 
-import { Briefcase, X } from 'lucide-react';
-import React, { useState } from 'react'
-import {formatDate} from "../utils/dateUtils"
-import { v4 as uuidv4 } from 'uuid';
+// import { Briefcase, X } from 'lucide-react';
+// import React, { useState } from 'react'
+// import {formatDate} from "../utils/dateUtils"
+// import { v4 as uuidv4 } from 'uuid';
 
-const ExperienceSection = ({userData, isOwnProfile, onSave}) => {
+// const ExperienceSection = ({userData, isOwnProfile, onSave}) => {
 
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [experiences, setExperiences] = useState(userData.experience || []);
+//   const [newExperience, setNewExperience] = useState({
+//     title:"",
+//     company:"",
+//     startDate:"",
+//     endDate:"",
+//     description:"",
+//     currentlyWorking:false
+//   });
+
+// const handleAddExperience = () => {
+//     if (newExperience.title && newExperience.company && newExperience.startDate) {
+//       const expWithTempId = { ...newExperience, _tempId: uuidv4() };
+//       const updated = [...experiences, expWithTempId];
+//       setExperiences(updated);
+//       setNewExperience({
+//         title: '',
+//         company: '',
+//         startDate: '',
+//         endDate: '',
+//         description: '',
+//         currentlyWorking: false,
+//       });
+//     }
+//   };
+
+
+//   // const handleDeleteExperience=()=>{
+//   //   setExperiences(experiences.filter((exp)=> exp._id !== id));
+//   // }
+//     const handleDeleteExperience = (id) => {
+//     setExperiences(experiences.filter(exp => exp._id !== id && exp._tempId !== id));
+//   };
+
+//   // const handleSave=()=>{
+//   //   onSave({experience:experiences})
+//   //   setIsEditing(false)
+//   // }
+
+//     const handleSave = () => {
+//     // Remove frontend-only _tempId before sending
+//     const payload = experiences.map(({ _tempId, ...rest }) => rest);
+//     onSave({ experience: payload });
+//     setIsEditing(false);
+//   };
+
+//   const handleCurrentlyWorkingChange=(e)=>{
+//     setNewExperience({
+//       ...newExperience,
+//       currentlyWorking: e.target.checked,
+//       endDate:e.target.checked ? "":newExperience.endDate
+//     })
+//   }
+//   return (
+//     <div className='bg-white shadow rounded-lg p-6 mb-6'>
+//       <h2 className="text-xl font-semibold mb-4">Experience</h2>
+//       {
+//         experiences.map((exp)=>(
+//           <div key={exp._id} className="mb-4 flex justify-between items-start">
+//             <div className="flex items-start">
+//               <div>
+//               <Briefcase size={20} className='mr-2 mt-1'/>
+//               <h3 className="font-semibold">{exp.title}</h3>
+//               <p className="text-gray-600">{exp.company}</p>
+//               <p className="text-gray-500 text-sm">
+//                 {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : "Present"}
+//                 </p>
+//                 <p className="text-gray-700">{exp.description}</p>
+//                 </div>
+//             </div>
+//             {
+//               isEditing && (
+//                 <button onClick={()=> handleDeleteExperience(exp._id || exp._tempId)} className='text-red-500'>
+//                   <X size={20}/>
+
+//                 </button>
+//               )
+//             }
+//           </div>
+
+          
+//         ))
+//       }
+
+//       {isEditing && (
+//         <div className="mt-4">
+//           <input 
+//           type="text"
+//           placeholder='Title' 
+//           value={newExperience.title}
+//           onChange={(e)=> setNewExperience({...newExperience, title:e.target.value})}
+//           className='w-full p-2 border rounded mb-2'
+//           />
+
+//            <input 
+//           type="text"
+//           placeholder='Company' 
+//           value={newExperience.company}
+//           onChange={(e)=> setNewExperience({...newExperience, company:e.target.value})}
+//           className='w-full p-2 border rounded mb-2'
+//           />
+//            <input 
+//           type="date"
+//           placeholder='start Date' 
+//           value={newExperience.startDate}
+//           onChange={(e)=> setNewExperience({...newExperience, startDate:e.target.value})}
+//           className='w-full p-2 border rounded mb-2'
+//           />
+//           <div className='flex items-center mb-2'>
+//             <input type="checkbox"
+//             id="currentlyWorking"
+//             checked={newExperience.currentlyWorking} 
+//             onChange={handleCurrentlyWorkingChange}
+//             className='mr-2'/>
+//             <label htmlFor="currentlyWorking">I am currently work here</label>
+//           </div>
+//           {
+//             !newExperience.currentlyWorking && (
+//               <input
+//               type="date"
+//               placeholder="End Date"
+//               value={newExperience.endDate}
+//               onChange={(e)=> setNewExperience({...newExperience, endDate:e.target.value})}
+//               className='w-full p-2 border rounded mb-2'
+//               />
+//             )
+//           }
+//           <textarea
+//           placeholder='Description'
+//           value={newExperience.description}
+//           onChange={(e)=> setNewExperience({...newExperience, description:e.target.value})}
+//           className='w-full p-2 border rounded mb-2'
+//           />
+//           <button 
+//           onClick={handleAddExperience}
+//           className="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300">
+//             Add Experience
+//           </button>
+//         </div>
+//       )}
+//       {
+//         isOwnProfile && (
+//           <>
+//           {
+//             isEditing ? (
+//               <button 
+//               onClick={handleSave}
+//               className="mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300">
+//                 Save Changes
+//               </button>
+//             ):(
+//               <button 
+//               onClick={()=> setIsEditing(true)}
+//               className= "mt-4 text-primary hover:bg-primary-dark transition duration-300">
+//                 Edit Experiences
+//               </button>
+//             )
+//           }
+//           </>
+//         )
+//       }
+      
+//     </div>
+//   )
+// }
+
+// export default ExperienceSection
+
+import { Briefcase, X } from "lucide-react";
+import React, { useState } from "react";
+
+const ExperienceSection = ({ userData, isOwnProfile, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [experiences, setExperiences] = useState(userData.experience || []);
   const [newExperience, setNewExperience] = useState({
-    title:"",
-    company:"",
-    startDate:"",
-    endDate:"",
-    description:"",
-    currentlyWorking:false
+    title: "",
+    company: "",
+    startYear: "",
+    endYear: "",
   });
 
-const handleAddExperience = () => {
-    if (newExperience.title && newExperience.company && newExperience.startDate) {
-      const expWithTempId = { ...newExperience, _tempId: uuidv4() };
-      const updated = [...experiences, expWithTempId];
-      setExperiences(updated);
+  const handleAddExperience = () => {
+    if (newExperience.title && newExperience.company && newExperience.startYear) {
+      setExperiences([...experiences, newExperience]);
       setNewExperience({
-        title: '',
-        company: '',
-        startDate: '',
-        endDate: '',
-        description: '',
-        currentlyWorking: false,
+        title: "",
+        company: "",
+        startYear: "",
+        endYear: "",
       });
     }
   };
 
-
-  // const handleDeleteExperience=()=>{
-  //   setExperiences(experiences.filter((exp)=> exp._id !== id));
-  // }
-    const handleDeleteExperience = (id) => {
-    setExperiences(experiences.filter(exp => exp._id !== id && exp._tempId !== id));
+  const handleDeleteExperience = (id) => {
+    setExperiences(experiences.filter((exp) => exp._id !== id));
   };
 
-  // const handleSave=()=>{
-  //   onSave({experience:experiences})
-  //   setIsEditing(false)
-  // }
-
-    const handleSave = () => {
-    // Remove frontend-only _tempId before sending
-    const payload = experiences.map(({ _tempId, ...rest }) => rest);
-    onSave({ experience: payload });
+  const handleSave = () => {
+    onSave({ experience: experiences });
     setIsEditing(false);
   };
 
-  const handleCurrentlyWorkingChange=(e)=>{
-    setNewExperience({
-      ...newExperience,
-      currentlyWorking: e.target.checked,
-      endDate:e.target.checked ? "":newExperience.endDate
-    })
-  }
   return (
-    <div className='bg-white shadow rounded-lg p-6 mb-6'>
+    <div className="bg-white shadow rounded-lg p-6 mb-6">
       <h2 className="text-xl font-semibold mb-4">Experience</h2>
-      {
-        experiences.map((exp)=>(
-          <div key={exp._id} className="mb-4 flex justify-between items-start">
-            <div className="flex items-start">
-              <div>
-              <Briefcase size={20} className='mr-2 mt-1'/>
+      {experiences.map((exp) => (
+        <div key={exp._id || exp.title} className="mb-4 flex justify-between items-start">
+          <div className="flex items-start">
+            <Briefcase size={20} className="mr-2 mt-1" />
+            <div>
               <h3 className="font-semibold">{exp.title}</h3>
               <p className="text-gray-600">{exp.company}</p>
               <p className="text-gray-500 text-sm">
-                {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : "Present"}
-                </p>
-                <p className="text-gray-700">{exp.description}</p>
-                </div>
+                {exp.startYear} - {exp.endYear || "Present"}
+              </p>
             </div>
-            {
-              isEditing && (
-                <button onClick={()=> handleDeleteExperience(exp._id || exp._tempId)} className='text-red-500'>
-                  <X size={20}/>
-
-                </button>
-              )
-            }
           </div>
-
-          
-        ))
-      }
+          {isEditing && (
+            <button
+              onClick={() => handleDeleteExperience(exp._id)}
+              className="text-red-500"
+            >
+              <X size={20} />
+            </button>
+          )}
+        </div>
+      ))}
 
       {isEditing && (
         <div className="mt-4">
-          <input 
-          type="text"
-          placeholder='Title' 
-          value={newExperience.title}
-          onChange={(e)=> setNewExperience({...newExperience, title:e.target.value})}
-          className='w-full p-2 border rounded mb-2'
+          <input
+            type="text"
+            placeholder="Job Title"
+            value={newExperience.title}
+            onChange={(e) =>
+              setNewExperience({ ...newExperience, title: e.target.value })
+            }
+            className="w-full p-2 border rounded mb-2"
           />
 
-           <input 
-          type="text"
-          placeholder='Company' 
-          value={newExperience.company}
-          onChange={(e)=> setNewExperience({...newExperience, company:e.target.value})}
-          className='w-full p-2 border rounded mb-2'
+          <input
+            type="text"
+            placeholder="Company"
+            value={newExperience.company}
+            onChange={(e) =>
+              setNewExperience({ ...newExperience, company: e.target.value })
+            }
+            className="w-full p-2 border rounded mb-2"
           />
-           <input 
-          type="date"
-          placeholder='start Date' 
-          value={newExperience.startDate}
-          onChange={(e)=> setNewExperience({...newExperience, startDate:e.target.value})}
-          className='w-full p-2 border rounded mb-2'
+
+          <input
+            type="number"
+            placeholder="Start Year"
+            value={newExperience.startYear}
+            onChange={(e) =>
+              setNewExperience({ ...newExperience, startYear: e.target.value })
+            }
+            className="w-full p-2 border rounded mb-2"
           />
-          <div className='flex items-center mb-2'>
-            <input type="checkbox"
-            id="currentlyWorking"
-            checked={newExperience.currentlyWorking} 
-            onChange={handleCurrentlyWorkingChange}
-            className='mr-2'/>
-            <label htmlFor="currentlyWorking">I am currently work here</label>
-          </div>
-          {
-            !newExperience.currentlyWorking && (
-              <input
-              type="date"
-              placeholder="End Date"
-              value={newExperience.endDate}
-              onChange={(e)=> setNewExperience({...newExperience, endDate:e.target.value})}
-              className='w-full p-2 border rounded mb-2'
-              />
-            )
-          }
-          <textarea
-          placeholder='Description'
-          value={newExperience.description}
-          onChange={(e)=> setNewExperience({...newExperience, description:e.target.value})}
-          className='w-full p-2 border rounded mb-2'
+
+          <input
+            type="number"
+            placeholder="End Year"
+            value={newExperience.endYear}
+            onChange={(e) =>
+              setNewExperience({ ...newExperience, endYear: e.target.value })
+            }
+            className="w-full p-2 border rounded mb-2"
           />
-          <button 
-          onClick={handleAddExperience}
-          className="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300">
+
+          <button
+            onClick={handleAddExperience}
+            className="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300"
+          >
             Add Experience
           </button>
         </div>
       )}
-      {
-        isOwnProfile && (
-          <>
-          {
-            isEditing ? (
-              <button 
-              onClick={handleSave}
-              className="mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300">
-                Save Changes
-              </button>
-            ):(
-              <button 
-              onClick={()=> setIsEditing(true)}
-              className= "mt-4 text-primary hover:bg-primary-dark transition duration-300">
-                Edit Experiences
-              </button>
-            )
-          }
-          </>
-        )
-      }
-      
-    </div>
-  )
-}
 
-export default ExperienceSection
+      {isOwnProfile && (
+        <>
+          {isEditing ? (
+            <button
+              onClick={handleSave}
+              className="mt-4 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300"
+            >
+              Save Changes
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsEditing(true)}
+              className="mt-4 text-primary hover:text-primary transition duration-300"
+            >
+              Edit Experience
+            </button>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+
+export default ExperienceSection;

@@ -160,23 +160,24 @@ export const getUserConnections = async(req, res)=>{
 
     }
 }
+export const removeConnection = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const myId = req.user._id;
 
-export const removeConnection = async (req, res)=>{
-    try{
-        const {userId} = req.params;
-        const myId = req.user._id;
+    // Remove the target user from my connections
+    await User.findByIdAndUpdate(myId, { $pull: { connections: userId } });
 
-        await User.findByIdAndUpdate(myId, {$pull: {connections: userId}});
-        await User.findOneAndUpdate(userId,{$pull: {connection: myId}});
+    // Remove myself from the target user's connections
+    await User.findByIdAndUpdate(userId, { $pull: { connections: myId } });
 
-        res.json({message: "Connection removed successfully"})
+    res.json({ message: "Connection removed successfully" });
+  } catch (error) {
+    console.error("Error in removeConnection controller:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
-    }catch(error){
-        console.error("Error in removeConnection controller: ", error)
-        res.status(500).json({message:"Server error"})
-
-    }
-}
 
 export const getConnectionStatus = async(req, res)=>{
     try{

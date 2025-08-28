@@ -249,7 +249,11 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 						</button>
 					)
 				) : (
+					<>
+					
+					
 					<div className='flex justify-center'>{renderConnectionButton()}</div>
+					</>
 				)}
 			</div>
 		</div>

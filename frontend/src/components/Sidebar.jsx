@@ -57,7 +57,7 @@ const Sidebar = ({user}) => {
         </div>
         <div className="border-t border-base-100 p-4">
             <Link to={`/profile/${user.username}`} className="text-sm font-semibold">
-            Visit tour profile</Link>
+            Visit your profile</Link>
         </div>
     </div>
     
