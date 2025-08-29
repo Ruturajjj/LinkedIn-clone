@@ -190,7 +190,10 @@ const ExperienceSection = ({ userData, isOwnProfile, onSave }) => {
 
   const handleAddExperience = () => {
     if (newExperience.title && newExperience.company && newExperience.startYear) {
-      setExperiences([...experiences, newExperience]);
+      // Assign a temporary client-only id for React
+      const tempExperience = { ...newExperience, id: Date.now() };
+
+      setExperiences([...experiences, tempExperience]);
       setNewExperience({
         title: "",
         company: "",
@@ -201,11 +204,18 @@ const ExperienceSection = ({ userData, isOwnProfile, onSave }) => {
   };
 
   const handleDeleteExperience = (id) => {
-    setExperiences(experiences.filter((exp) => exp._id !== id));
+    setExperiences(
+      experiences.filter(
+        (exp) => exp._id !== id && exp.id !== id // check both _id (Mongo) and id (client)
+      )
+    );
   };
 
   const handleSave = () => {
-    onSave({ experience: experiences });
+    // Strip out client-only ids before saving
+    const cleanedExperiences = experiences.map(({ id, ...exp }) => exp);
+
+    onSave({ experience: cleanedExperiences });
     setIsEditing(false);
   };
 
@@ -213,7 +223,10 @@ const ExperienceSection = ({ userData, isOwnProfile, onSave }) => {
     <div className="bg-white shadow rounded-lg p-6 mb-6">
       <h2 className="text-xl font-semibold mb-4">Experience</h2>
       {experiences.map((exp) => (
-        <div key={exp._id || exp.title} className="mb-4 flex justify-between items-start">
+        <div
+          key={exp._id || exp.id || exp.title}
+          className="mb-4 flex justify-between items-start"
+        >
           <div className="flex items-start">
             <Briefcase size={20} className="mr-2 mt-1" />
             <div>
@@ -226,7 +239,7 @@ const ExperienceSection = ({ userData, isOwnProfile, onSave }) => {
           </div>
           {isEditing && (
             <button
-              onClick={() => handleDeleteExperience(exp._id)}
+              onClick={() => handleDeleteExperience(exp._id || exp.id)}
               className="text-red-500"
             >
               <X size={20} />
